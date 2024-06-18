@@ -39,11 +39,23 @@ const ContactsFormV1 = (props) => {
     //3. Crear contacto
     const nuevoContacto = new Contacto(nombre, numero, email, imagen);
 
-    //4. Guardar en el LS
+    //4. Guardar en lista (que luego actualiza el LS)
     const nuevaLista = [...contactos, nuevoContacto];
     setContactos(nuevaLista);
     //localStorage.setItem("contactos", JSON.stringify([nuevoContacto]));
     //console.log(nombre, numero, email, imagen);
+
+    //5. Mostrar mensaje de exito
+    alert("Contacto guardado");
+
+    //6. Reiniciar formulario
+    e.target.reset();
+
+    //7.Resetear clases
+    $inputNombre.current.classList.remove("is-valid", "is-invalid");
+    $inputNumero.current.classList.remove("is-valid", "is-invalid");
+    $inputEmail.current.classList.remove("is-valid", "is-invalid");
+    $inputImagen.current.classList.remove("is-valid", "is-invalid");
   };
 
   return (
