@@ -1,9 +1,12 @@
 import { Outlet } from "react-router-dom";
+import Header from "../components/Common/Header/Header";
 
 const RootView = () => {
   return (
     <>
-      <header>Este es el header</header>
+      <header>
+        <Header />
+      </header>
       <main className="container">
         <Outlet />
       </main>

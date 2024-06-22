@@ -1,8 +1,35 @@
 import PropTypes from "prop-types";
 import ContactsRow from "./ContactsRow";
+import "./ContactsRow.css";
+import Swal from "sweetalert2";
 
 const ContactsTable = (props) => {
-  const { contactos } = props;
+  const { contactos, setContactos } = props;
+
+  const deleteContact = (idContact, nombreContact) => {
+    Swal.fire({
+      title: "Atencion",
+      html: `<p>Estas por eliminar el contacto de <b>${nombreContact}</b>. Esta accion es irreversible</p>`,
+      icon: "warning",
+      showCancelButton: true,
+      showConfirmButton: true,
+      confirmButtonText: "Si, eliminar",
+      cancelButtonText: "No, conservar",
+      confirmButtonColor: "red",
+    }).then((res) => {
+      if (res.isConfirmed) {
+        const nuevaLista = contactos.filter((c) => c.codigo !== idContact);
+        setContactos(nuevaLista);
+        Swal.fire({
+          title: "Contacto eliminado exitosamente",
+          icon: "success",
+          showCancelButton: false,
+          showConfirmButton: false,
+          timer: 1200,
+        });
+      }
+    });
+  };
 
   return (
     <table className="table mt-4">
@@ -19,7 +46,12 @@ const ContactsTable = (props) => {
       <tbody>
         {contactos.map((contact, index) => {
           return (
-            <ContactsRow key={contact.codigo} contact={contact} index={index} />
+            <ContactsRow
+              contact={contact}
+              deleteContact={deleteContact}
+              index={index}
+              key={contact.codigo}
+            />
           );
         })}
       </tbody>
